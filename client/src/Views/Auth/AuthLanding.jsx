@@ -7,6 +7,7 @@ import AppLayout from '../../Components/AppLayout/AppLayout';
 import { GoogleLogin } from 'react-google-login';
 import { gapi } from 'gapi-script'
 import { message } from "antd/es";
+import FaceIo from "./FaceIO";
 
 const CLIENT_ID = '712514481296-k2kaus5v535uq5s1vsgngv1729oas6m6.apps.googleusercontent.com';
 
@@ -22,46 +23,6 @@ const AuthLanding = () => {
     useEffect(() => {
         faceio = new faceIO("fioa414d");
     }, []);
-
-    const handleFaceIORegistration = async () => {
-        setFaceIoLoading(true);
-        try {
-            let response = await faceio.enroll({
-                locale: "auto", payload: {
-                    email: "example@gmail.com", pin: "12345",
-                },
-            });
-            message.success(` Unique Facial ID: ${response.facialId}
-              Enrollment Date: ${response.timestamp}
-              Gender: ${response.details.gender}
-              Age Approximation: ${response.details.age}`);
-        } catch (error) {
-            console.log(error);
-        } finally {
-            setTimeout(() => {
-                setFaceIoLoading(false);
-            }, 3000);
-        }
-    };
-
-    const handleLogIn = async () => {
-        setFaceIoLoading(true);
-        try {
-            let response = await faceio.authenticate({
-                locale: "auto",
-            });
-
-            console.log(` Unique Facial ID: ${response.facialId}
-              PayLoad: ${response.payload}
-              `);
-        } catch (error) {
-            console.log(error);
-        } finally {
-            setTimeout(() => {
-                setFaceIoLoading(false);
-            }, 3000);
-        }
-    };
 
     const responseGoogle = (response) => {
         setLoading(true);
@@ -88,7 +49,7 @@ const AuthLanding = () => {
         // });
 
         //calling faceio reg function
-        handleFaceIORegistration()
+        setFaceIoLoading('reg');
 
     }
 
@@ -121,7 +82,10 @@ const AuthLanding = () => {
                             With</Divider>
                     </div>
                     <br />
-                    <div className={styles.face_id} onClick={handleLogIn}>
+                    <div className={styles.face_id} onClick={()=>{
+                        console.log('trig')
+                        setFaceIoLoading('log');
+                    }}>
                         <img
                             src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Face_ID_logo.svg/1200px-Face_ID_logo.svg.png"
                             alt="" />
@@ -130,6 +94,11 @@ const AuthLanding = () => {
                 </div>
             </div>
         </section>
+
+        {
+            faceIoLoading &&
+            <FaceIo op={faceIoLoading} setFaceIoLoading={setFaceIoLoading} />
+        }
     </AppLayout>);
 };
 
