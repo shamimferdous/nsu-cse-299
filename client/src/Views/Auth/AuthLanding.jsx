@@ -1,12 +1,12 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import styles from './Auth.module.scss';
-import {Button, Divider} from 'antd';
+import { Button, Divider } from 'antd';
 
 //importing components
 import AppLayout from '../../Components/AppLayout/AppLayout';
-import {GoogleLogin} from 'react-google-login';
-import {gapi} from 'gapi-script'
-import {message} from "antd/es";
+import { GoogleLogin } from 'react-google-login';
+import { gapi } from 'gapi-script'
+import { message } from "antd/es";
 
 const CLIENT_ID = '712514481296-k2kaus5v535uq5s1vsgngv1729oas6m6.apps.googleusercontent.com';
 
@@ -15,6 +15,7 @@ const AuthLanding = () => {
 
     const [loading, setLoading] = useState(false);
     const [faceIoLoading, setFaceIoLoading] = useState(false);
+
 
     let faceio;
 
@@ -37,7 +38,9 @@ const AuthLanding = () => {
         } catch (error) {
             console.log(error);
         } finally {
-            setFaceIoLoading(false);
+            setTimeout(() => {
+                setFaceIoLoading(false);
+            }, 3000);
         }
     };
 
@@ -54,7 +57,9 @@ const AuthLanding = () => {
         } catch (error) {
             console.log(error);
         } finally {
-            setFaceIoLoading(false);
+            setTimeout(() => {
+                setFaceIoLoading(false);
+            }, 3000);
         }
     };
 
@@ -90,10 +95,10 @@ const AuthLanding = () => {
     return (<AppLayout>
         <section className={styles.wrapper}>
             <div className={styles.left}>
-                <img src="/mockup.png" alt=""/>
+                <img src="/mockup.png" alt="" />
             </div>
             <div className={styles.right}>
-                <div className={styles.auth_box} style={{display: faceIoLoading ? 'none' : null}}>
+                <div className={styles.auth_box} style={{ display: faceIoLoading ? 'none' : null }}>
                     <GoogleLogin
                         clientId={CLIENT_ID}  // your Google app client ID
                         render={renderProps => (<Button
@@ -103,23 +108,23 @@ const AuthLanding = () => {
                             loading={loading}
                             className={styles.loginBtn}
                         >
-                            <img src="/google-icon.png" alt=""/>
+                            <img src="/google-icon.png" alt="" />
                             Sign Up with Google
                         </Button>)}
                         onSuccess={responseGoogle} // perform your user logic here
                         onFailure={responseGoogle} // handle errors here
                         cookiePolicy={'single_host_origin'}
                     />
-                    <br/>
-                    <div style={{width: '100%'}}>
-                        <Divider style={{fontSize: '1rem', color: 'var(--color-grey-dark-3)'}}>Or Sign In
+                    <br />
+                    <div style={{ width: '100%' }}>
+                        <Divider style={{ fontSize: '1rem', color: 'var(--color-grey-dark-3)' }}>Or Sign In
                             With</Divider>
                     </div>
-                    <br/>
+                    <br />
                     <div className={styles.face_id} onClick={handleLogIn}>
                         <img
                             src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Face_ID_logo.svg/1200px-Face_ID_logo.svg.png"
-                            alt=""/>
+                            alt="" />
                         <span>Face ID</span>
                     </div>
                 </div>
