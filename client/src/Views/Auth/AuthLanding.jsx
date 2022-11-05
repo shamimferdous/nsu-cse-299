@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import styles from './Auth.module.scss';
-import { Button, Divider } from 'antd';
+import {Button, Divider} from 'antd';
 
 //importing components
 import AppLayout from '../../Components/AppLayout/AppLayout';
-import { GoogleLogin } from 'react-google-login';
-import { gapi } from 'gapi-script'
+import {GoogleLogin} from 'react-google-login';
+import {gapi} from 'gapi-script'
+import {message} from "antd/es";
 
 const CLIENT_ID = '712514481296-k2kaus5v535uq5s1vsgngv1729oas6m6.apps.googleusercontent.com';
 
@@ -21,21 +22,18 @@ const AuthLanding = () => {
         faceio = new faceIO("fioa414d");
     }, []);
 
-    const handleSignIn = async () => {
+    const handleFaceIORegistration = async () => {
         setFaceIoLoading(true);
         try {
             let response = await faceio.enroll({
-                locale: "auto",
-                payload: {
-                    email: "example@gmail.com",
-                    pin: "12345",
+                locale: "auto", payload: {
+                    email: "example@gmail.com", pin: "12345",
                 },
             });
-
-            console.log(` Unique Facial ID: ${response.facialId}
-          Enrollment Date: ${response.timestamp}
-          Gender: ${response.details.gender}
-          Age Approximation: ${response.details.age}`);
+            message.success(` Unique Facial ID: ${response.facialId}
+              Enrollment Date: ${response.timestamp}
+              Gender: ${response.details.gender}
+              Age Approximation: ${response.details.age}`);
         } catch (error) {
             console.log(error);
         } finally {
@@ -70,6 +68,7 @@ const AuthLanding = () => {
             dp: response.profileObj.imageUrl
         };
 
+        //api call here to backend
         // axios.post('/users/login', payload).then(response => {
         //     console.log(response.data);
 
@@ -83,48 +82,50 @@ const AuthLanding = () => {
         //     setLoading(false);
         // });
 
+        //calling faceio reg function
+        handleFaceIORegistration()
+
     }
 
-    return (
-        <AppLayout>
-            <section className={styles.wrapper}>
-                <div className={styles.left}>
-                    <img src="/mockup.png" alt="" />
-                </div>
-                <div className={styles.right}>
-                    <div className={styles.auth_box} style={{ display: faceIoLoading ? 'none' : null }}>
-                        <GoogleLogin
-                            clientId={CLIENT_ID}  // your Google app client ID
-                            render={renderProps => (
-                                <Button
-                                    type='primary'
-                                    onClick={renderProps.onClick}
-                                    disabled={renderProps.disabled}
-                                    loading={loading}
-                                    className={styles.loginBtn}
-                                >
-                                    <img src="/google-icon.png" alt="" />
-                                    Sign Up with Google
-                                </Button>
-                            )}
-                            onSuccess={responseGoogle} // perform your user logic here
-                            onFailure={responseGoogle} // handle errors here
-                            cookiePolicy={'single_host_origin'}
-                        />
-                        <br />
-                        <div style={{ width: '100%' }}>
-                            <Divider style={{ fontSize: '1rem', color: 'var(--color-grey-dark-3)' }}>Or Sign In With</Divider>
-                        </div>
-                        <br />
-                        <div className={styles.face_id} onClick={handleLogIn}>
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Face_ID_logo.svg/1200px-Face_ID_logo.svg.png" alt="" />
-                            <span>Face ID</span>
-                        </div>
+    return (<AppLayout>
+        <section className={styles.wrapper}>
+            <div className={styles.left}>
+                <img src="/mockup.png" alt=""/>
+            </div>
+            <div className={styles.right}>
+                <div className={styles.auth_box} style={{display: faceIoLoading ? 'none' : null}}>
+                    <GoogleLogin
+                        clientId={CLIENT_ID}  // your Google app client ID
+                        render={renderProps => (<Button
+                            type='primary'
+                            onClick={renderProps.onClick}
+                            disabled={renderProps.disabled}
+                            loading={loading}
+                            className={styles.loginBtn}
+                        >
+                            <img src="/google-icon.png" alt=""/>
+                            Sign Up with Google
+                        </Button>)}
+                        onSuccess={responseGoogle} // perform your user logic here
+                        onFailure={responseGoogle} // handle errors here
+                        cookiePolicy={'single_host_origin'}
+                    />
+                    <br/>
+                    <div style={{width: '100%'}}>
+                        <Divider style={{fontSize: '1rem', color: 'var(--color-grey-dark-3)'}}>Or Sign In
+                            With</Divider>
+                    </div>
+                    <br/>
+                    <div className={styles.face_id} onClick={handleLogIn}>
+                        <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Face_ID_logo.svg/1200px-Face_ID_logo.svg.png"
+                            alt=""/>
+                        <span>Face ID</span>
                     </div>
                 </div>
-            </section>
-        </AppLayout >
-    );
+            </div>
+        </section>
+    </AppLayout>);
 };
 
 export default AuthLanding;
