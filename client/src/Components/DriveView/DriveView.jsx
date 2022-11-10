@@ -2,6 +2,7 @@ import {Button, Table} from "antd";
 import {files} from "./data.js";
 import { FileIcon, defaultStyles } from 'react-file-icon';
 import {BsDownload} from 'react-icons/bs';
+import moment from "moment";
 
 const DriveView = () => {
   function bytesToSize(bytes) {
@@ -32,7 +33,7 @@ const DriveView = () => {
         {
             title: 'Last Modified',
             dataIndex: 'last_modified',
-            sorter: (a, b) => a.last_modified - b.last_modified
+            sorter: (a, b) => (a, b) => moment(a.last_modified).unix() - moment(b.last_modified).unix()
         },
         {
             title: 'Actions',
