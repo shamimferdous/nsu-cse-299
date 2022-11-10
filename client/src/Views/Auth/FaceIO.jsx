@@ -1,8 +1,8 @@
-import React, {useEffect} from 'react';
-import {message} from "antd";
-import {useHistory} from "react-router-dom";
+import React, { useEffect } from 'react';
+import { message } from "antd";
+import { useHistory } from "react-router-dom";
 
-const FaceIo = ({op, setFaceIoLoading}) => {
+const FaceIo = ({ op, setFaceIoLoading }) => {
 
     const history = useHistory();
     let faceio;
@@ -11,7 +11,7 @@ const FaceIo = ({op, setFaceIoLoading}) => {
         console.log('useeffect');
         faceio = new faceIO("fioa414d");
 
-        if(op === 'reg') {
+        if (op === 'reg') {
             handleFaceIORegistration()
         } else {
             handleFaceIOLogIn();
@@ -36,6 +36,7 @@ const FaceIo = ({op, setFaceIoLoading}) => {
         } finally {
             setTimeout(() => {
                 setFaceIoLoading(false);
+                location.reload();
             }, 3000);
         }
     };
@@ -57,6 +58,7 @@ const FaceIo = ({op, setFaceIoLoading}) => {
         } finally {
             setTimeout(() => {
                 setFaceIoLoading(false);
+                location.reload();
             }, 3000);
         }
     };
