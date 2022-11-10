@@ -9,10 +9,12 @@ import {FiSearch} from "react-icons/fi";
 import {Affix, Select, Button} from "antd";
 import DriveView from "../../Components/DriveView/DriveView.jsx";
 import {SlPlus} from 'react-icons/sl';
+import FileUpload from "../../Components/FileUpload/FileUpload.jsx";
 
 const AppLanding = () => {
 
     const [top, setTop] = useState(100);
+    const [uploadModalVisibility, setUploadModalVisibility] = useState(false);
 
     return (
         <AppLayout>
@@ -46,7 +48,10 @@ const AppLanding = () => {
                                     </button>
                                 </form>
                                 <div>
-                                    <Button style={{display: 'flex', alignItems: 'center', justifyContent: 'center', borderColor: 'var(--color-primary)'}}>
+                                    <Button
+                                        onClick={()=>setUploadModalVisibility(true)}
+                                        style={{display: 'flex', alignItems: 'center', justifyContent: 'center', borderColor: 'var(--color-primary)'}}
+                                    >
                                         <SlPlus size={20} color={'var(--color-primary)'} style={{marginRight: '.5rem'}} />
                                         <span style={{color: 'var(--color-primary)'}}>New</span>
                                     </Button>
@@ -57,6 +62,13 @@ const AppLanding = () => {
                     </Col>
                 </Row>
             </section>
+            {
+                uploadModalVisibility &&
+                <FileUpload
+                    uploadModalVisibility={uploadModalVisibility}
+                    setUploadModalVisibility={setUploadModalVisibility}
+                />
+            }
         </AppLayout>
     );
 };
