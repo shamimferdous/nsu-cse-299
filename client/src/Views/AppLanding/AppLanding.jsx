@@ -6,6 +6,7 @@ import {FaHdd, FaTrashAlt} from 'react-icons/fa';
 import {HiClock} from 'react-icons/hi';
 import {FiSearch} from "react-icons/fi";
 import {Select} from "antd/es";
+import DriveView from "../../Components/DriveView/DriveView.jsx";
 
 const AppLanding = () => {
     return (
@@ -29,7 +30,7 @@ const AppLanding = () => {
                         </ul>
                     </Col>
                     <Col span={18}>
-                        <div>
+                        <div style={{padding: '0 2rem'}}>
                             <div className={styles.filter}>
                                 <form>
                                     <input type="text" placeholder='Search In Drive'/>
@@ -44,6 +45,7 @@ const AppLanding = () => {
                                     </Select>
                                 </div>
                             </div>
+                            <DriveView />
                         </div>
                     </Col>
                 </Row>

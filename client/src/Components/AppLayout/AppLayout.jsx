@@ -4,7 +4,7 @@ import { FiSearch } from 'react-icons/fi';
 
 const AppLayout = (props) => {
     return (
-        <>
+        <div className={styles.main_wrapper}>
             <header className={styles.header}>
                 <div className={styles.left}>
                     <img src="/logo-typo.png" alt="" />
@@ -28,7 +28,7 @@ const AppLayout = (props) => {
             <main className={styles.main}>
                 {props.children}
             </main>
-        </>
+        </div>
     );
 };
 

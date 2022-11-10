@@ -30,16 +30,23 @@ a::before {
     box-sizing: inherit;
 }
 
+body {
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--color-dark) !important;
+  background-color: var(--color-grey) !important;
+  background-size: cover;
+  background-repeat: no-repeat; }
+
 html {
     box-sizing: border-box;
     font-size: 14px !important;
+    overflow-x: hidden;
 }
 
 #root {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+    width: 100vw;
+    overflow-x: hidden;
 }
 
 input:focus,

@@ -1,76 +1,91 @@
 .header {
+  display: flex;
+  align-items: center;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1rem 0;
+  justify-content: space-between;
+  width: 100%;
+  z-index: 10000;
+  background-color: var(--color-light);
+  position: fixed;
+  top: 0%;
+  width: 100%;
+  margin-left: 50%;
+  transform: translateX(-50%);
+
+  img {
+    width: 100px;
+  }
+
+  ul {
+    list-style: none;
     display: flex;
     align-items: center;
-    max-width: 1280px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 1rem 0;
-    justify-content: space-between;
-    width: 100%;
+    margin: 0;
 
-    // position: absolute;
-    // top: 0%;
-    // width: 100%;
+    li {
+      margin-left: 2rem;
 
-    img {
-        width: 100px;
-    }
+      a {
+        color: var(--color-dark);
+        text-decoration: none;
+        font-weight: 600;
 
-    ul {
-        list-style: none;
-        display: flex;
-        align-items: center;
-        margin: 0;
+        transition: all .3s;
 
-        li {
-            margin-left: 2rem;
-            a {
-                color: var(--color-dark);
-                text-decoration: none;
-                font-weight: 600;
-
-                transition: all .3s;
-
-                &:hover {
-                    color: var(--color-primary);
-                }
-            }
+        &:hover {
+          color: var(--color-primary);
         }
-        
+      }
     }
+
+  }
+}
+
+.main_wrapper {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 .main {
-    max-width: 1280px;
-    margin: 0 auto;
-    width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 70px !important;
 }
 
 .left {
+  display: flex;
+  align-items: center;
+
+  form {
+    margin-left: 2rem;
+    background-color: var(--color-grey-light-3);
+    border-radius: 5px;
+    width: 35vw;
     display: flex;
     align-items: center;
 
-    form {
-        margin-left: 2rem;
-        background-color: var(--color-grey-light-3);
-        border-radius: 5px;
-        width: 35vw;
-        display: flex;
-        align-items: center;
-        
-        input {
-            background-color: transparent;
-            border: none;
-            padding-left: 2rem;
-            flex: 0 0 85%;
-        }
-
-        button {
-            background-color: transparent;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex: 0 0 15%;
-        }
+    input {
+      background-color: transparent;
+      border: none;
+      padding-left: 2rem;
+      flex: 0 0 85%;
     }
+
+    button {
+      background-color: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 15%;
+    }
+  }
 }
