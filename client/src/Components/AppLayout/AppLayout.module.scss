@@ -5,8 +5,12 @@
     margin-left: auto;
     margin-right: auto;
     padding: 1rem 0;
-
     justify-content: space-between;
+    width: 100%;
+
+    // position: absolute;
+    // top: 0%;
+    // width: 100%;
 
     img {
         width: 100px;
@@ -15,6 +19,8 @@
     ul {
         list-style: none;
         display: flex;
+        align-items: center;
+        margin: 0;
 
         li {
             margin-left: 2rem;
@@ -37,4 +43,34 @@
 .main {
     max-width: 1280px;
     margin: 0 auto;
+    width: 100%;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+
+    form {
+        margin-left: 2rem;
+        background-color: var(--color-grey-light-3);
+        border-radius: 5px;
+        width: 35vw;
+        display: flex;
+        align-items: center;
+        
+        input {
+            background-color: transparent;
+            border: none;
+            padding-left: 2rem;
+            flex: 0 0 85%;
+        }
+
+        button {
+            background-color: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 15%;
+        }
+    }
 }

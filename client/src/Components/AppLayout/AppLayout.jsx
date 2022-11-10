@@ -1,11 +1,20 @@
 import { Link } from 'react-router-dom';
 import styles from './AppLayout.module.scss';
+import { FiSearch } from 'react-icons/fi';
 
 const AppLayout = (props) => {
     return (
-        <div>
+        <>
             <header className={styles.header}>
-                <img src="/logo-typo.png" alt="" />
+                <div className={styles.left}>
+                    <img src="/logo-typo.png" alt="" />
+                    {/*<form>*/}
+                    {/*    <input type="text" placeholder='Search In Drive' />*/}
+                    {/*    <button>*/}
+                    {/*        <FiSearch size={20} />*/}
+                    {/*    </button>*/}
+                    {/*</form>*/}
+                </div>
                 <ul>
                     <li>
                         <Link to={"/"}>Privacy Policy</Link>
@@ -19,7 +28,7 @@ const AppLayout = (props) => {
             <main className={styles.main}>
                 {props.children}
             </main>
-        </div>
+        </>
     );
 };
 

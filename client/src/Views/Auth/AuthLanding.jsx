@@ -53,53 +53,55 @@ const AuthLanding = () => {
 
     }
 
-    return (<AppLayout>
-        <section className={styles.wrapper}>
-            <div className={styles.left}>
-                <img src="/mockup.png" alt="" />
-            </div>
-            <div className={styles.right}>
-                <div className={styles.auth_box} style={{ display: faceIoLoading ? 'none' : null }}>
-                    <GoogleLogin
-                        clientId={CLIENT_ID}  // your Google app client ID
-                        render={renderProps => (<Button
-                            type='primary'
-                            onClick={renderProps.onClick}
-                            disabled={renderProps.disabled}
-                            loading={loading}
-                            className={styles.loginBtn}
-                        >
-                            <img src="/google-icon.png" alt="" />
-                            Sign Up with Google
-                        </Button>)}
-                        onSuccess={responseGoogle} // perform your user logic here
-                        onFailure={responseGoogle} // handle errors here
-                        cookiePolicy={'single_host_origin'}
-                    />
-                    <br />
-                    <div style={{ width: '100%' }}>
-                        <Divider style={{ fontSize: '1rem', color: 'var(--color-grey-dark-3)' }}>Or Sign In
-                            With</Divider>
-                    </div>
-                    <br />
-                    <div className={styles.face_id} onClick={()=>{
-                        console.log('trig')
-                        setFaceIoLoading('log');
-                    }}>
-                        <img
-                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Face_ID_logo.svg/1200px-Face_ID_logo.svg.png"
-                            alt="" />
-                        <span>Face ID</span>
+    return (
+        <AppLayout>
+            <section className={styles.wrapper}>
+                <div className={styles.left}>
+                    <img src="/mockup.png" alt="" />
+                </div>
+                <div className={styles.right}>
+                    <div className={styles.auth_box} style={{ display: faceIoLoading ? 'none' : null }}>
+                        <GoogleLogin
+                            clientId={CLIENT_ID}  // your Google app client ID
+                            render={renderProps => (<Button
+                                type='primary'
+                                onClick={renderProps.onClick}
+                                disabled={renderProps.disabled}
+                                loading={loading}
+                                className={styles.loginBtn}
+                            >
+                                <img src="/google-icon.png" alt="" />
+                                Sign Up with Google
+                            </Button>)}
+                            onSuccess={responseGoogle} // perform your user logic here
+                            onFailure={responseGoogle} // handle errors here
+                            cookiePolicy={'single_host_origin'}
+                        />
+                        <br />
+                        <div style={{ width: '100%' }}>
+                            <Divider style={{ fontSize: '1rem', color: 'var(--color-grey-dark-3)' }}>Or Sign In
+                                With</Divider>
+                        </div>
+                        <br />
+                        <div className={styles.face_id} onClick={() => {
+                            console.log('trig')
+                            setFaceIoLoading('log');
+                        }}>
+                            <img
+                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Face_ID_logo.svg/1200px-Face_ID_logo.svg.png"
+                                alt="" />
+                            <span>Face ID</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        {
-            faceIoLoading &&
-            <FaceIo op={faceIoLoading} setFaceIoLoading={setFaceIoLoading} />
-        }
-    </AppLayout>);
+            {
+                faceIoLoading &&
+                <FaceIo op={faceIoLoading} setFaceIoLoading={setFaceIoLoading} />
+            }
+        </AppLayout>
+    );
 };
 
 export default AuthLanding;
