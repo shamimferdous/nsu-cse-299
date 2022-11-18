@@ -49,8 +49,29 @@ html {
     overflow-x: hidden;
 }
 
+#fioUiModal {
+    z-index: 1000000;
+  }
+  .fio-ui-modal {
+    z-index: 1000000 !important;
+  }
+
 input:focus,
 textarea:focus,
 select:focus,
 button:focus {
   outline: none; }
+
+  .faceio-modal {
+    z-index: 10000 !important;
+  }
+
+  .fio-ui-modal .fio-show-modal {
+    z-index: 10000 !important;
+  }
+
+  .fio-ui-modal {
+    z-index: 1000000 !important;
+  }
+
+  
