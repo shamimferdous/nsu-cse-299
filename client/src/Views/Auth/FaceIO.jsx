@@ -9,7 +9,7 @@ const FaceIo = ({ op, setFaceIoLoading }) => {
 
     useEffect(() => {
         console.log('useeffect');
-        faceio = new faceIO("fioa414d");
+        faceio = new faceIO("fioa6ce0");
 
 
         if (op === 'reg') {
@@ -25,7 +25,7 @@ const FaceIo = ({ op, setFaceIoLoading }) => {
         try {
             let response = await faceio.enroll({
                 locale: "auto", payload: {
-                    email: "example@gmail.com", pin: "12345",
+                    email: "shamimferdous5@gmail.com",
                 },
             });
             message.success(` Unique Facial ID: ${response.facialId}
@@ -33,12 +33,10 @@ const FaceIo = ({ op, setFaceIoLoading }) => {
               Gender: ${response.details.gender}
               Age Approximation: ${response.details.age}`);
         } catch (error) {
+            console.log('err here');
             console.log(error);
         } finally {
-            setTimeout(() => {
-                setFaceIoLoading(false);
-                location.reload();
-            }, 3000);
+
         }
     };
 
@@ -60,10 +58,7 @@ const FaceIo = ({ op, setFaceIoLoading }) => {
         } catch (error) {
             console.log(error);
         } finally {
-            setTimeout(() => {
-                setFaceIoLoading(false);
-                // location.reload();
-            }, 3000);
+
         }
     };
 
