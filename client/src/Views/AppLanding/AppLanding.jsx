@@ -1,7 +1,7 @@
 import {Col, Row} from 'antd';
 import AppLayout from "../../Components/AppLayout/AppLayout.jsx";
 import styles from './AppLanding.module.scss';
-import {useState} from "react";
+import { useEffect, useState } from "react";
 
 import {FaHdd, FaTrashAlt} from 'react-icons/fa';
 import {HiClock} from 'react-icons/hi';
@@ -10,11 +10,20 @@ import {Affix, Select, Button} from "antd";
 import DriveView from "../../Components/DriveView/DriveView.jsx";
 import {SlPlus} from 'react-icons/sl';
 import FileUpload from "../../Components/FileUpload/FileUpload.jsx";
+import axios from "../../config/axios.js";
 
-const AppLanding = () => {
+const AppLanding = (props) => {
 
     const [top, setTop] = useState(100);
     const [uploadModalVisibility, setUploadModalVisibility] = useState(false);
+
+    useEffect(()=>{
+        axios.get('/users/v1/authenticate', {withCredentials: true}).then(response=>{
+            console.log(response.data);
+        }).catch(error=>{
+            props.history.push('/');
+        })
+    }, []);
 
     return (
         <AppLayout>

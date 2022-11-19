@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { message } from "antd";
 import { useHistory } from "react-router-dom";
+import axios from '../../config/axios';
 
-const FaceIo = ({ op, setFaceIoLoading }) => {
+const FaceIo = ({op, setFaceIoLoading}) => {
 
     const history = useHistory();
     let faceio;
@@ -58,7 +59,11 @@ const FaceIo = ({ op, setFaceIoLoading }) => {
         } catch (error) {
             console.log(error);
         } finally {
-
+            let f_id = 'e802443ccb12423d923b61fb39221d96fioa0af6';
+            axios.post('/users/v1/sign-in', {facial_id: f_id}).then(response => {
+                console.log(response.data);
+                localStorage.setItem('device_id', response.data.token);
+            })
         }
     };
 

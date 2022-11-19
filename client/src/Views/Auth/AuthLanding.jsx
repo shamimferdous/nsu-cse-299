@@ -18,11 +18,14 @@ const AuthLanding = () => {
     const [faceIoLoading, setFaceIoLoading] = useState(false);
 
 
-    let faceio;
-
-    useEffect(() => {
-        faceio = new faceIO("fioa414d");
-    }, []);
+    // let faceio;
+    //
+    // useEffect(() => {
+    //     faceio = new faceIO("fioa414d");
+    // }, []);
+    //
+    //
+    //
 
     const responseGoogle = (response) => {
         setLoading(true);
