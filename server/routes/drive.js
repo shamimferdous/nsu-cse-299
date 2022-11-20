@@ -9,7 +9,7 @@
 
 // const multer = require('multer');
 const drive = require('../utils/service');
-
+const passport = require('passport');
 
 
 //----------
@@ -22,6 +22,7 @@ const crypto = require("crypto");
 const fs = require("fs");
 const path = require("path");
 const stream = require("stream");
+const File = require('../models/File');
 
 
 const storage = multer.memoryStorage()
@@ -89,7 +90,7 @@ function getEncryptedFilePath(filePath) {
     return path.join(path.dirname(filePath), path.basename(filePath, path.extname(filePath)) + "_encrypted" + path.extname(filePath))
 }
 
-async function saveEncryptedFile(buffer, filePath, key, iv, fileObject) {
+async function saveEncryptedFile(buffer, filePath, key, iv, fileObject, user) {
     const encrypted = encrypt(CryptoAlgorithm, buffer, key, iv);
 
     filePath = getEncryptedFilePath(filePath);
@@ -114,7 +115,17 @@ async function saveEncryptedFile(buffer, filePath, key, iv, fileObject) {
     });
 
     console.log(`Uploaded file ${data.name} ${data.id}`);
+
     //saving file info to db
+    const newFile = new File({
+        name: fileObject.originalname,
+        mime_type: fileObject.mimetype,
+        drive_id: data.id,
+        size: fileObject.size,
+        user: user._id
+    });
+
+    newFile.save();
 
 
     fs.writeFileSync(filePath, encrypted);
@@ -127,20 +138,23 @@ function getEncryptedFile(encrypted, key, iv) {
     return buffer;
 }
 
-router.post("/v1/upload", upload.single("file"), (req, res, next) => {
+router.post("/v1/upload", passport.authenticate('jwt', { session: false }), upload.single("file"), (req, res, next) => {
+
     console.log(req.file);
     console.log("file upload: ", req.file.originalname);
-    saveEncryptedFile(req.file.buffer, path.join("./uploads", req.file.originalname), secret.key, secret.iv, req.file);
+    saveEncryptedFile(req.file.buffer, path.join("./uploads", req.file.originalname), secret.key, secret.iv, req.file, req.user);
     res.status(201).json({ status: "ok" });
 });
 
 
-router.get("/v1/download", async (req, res, next) => {
+router.get("/v1/download/:driveID", async (req, res, next) => {
     // 101P_6yLStzFQF9qdhuyKKjQNTH-PtChD
+
+    let db_file = await File.findOne({ drive_id: req.params.driveID });
 
     try {
         const file = await drive({ version: 'v3' }).files.get({
-            fileId: '101P_6yLStzFQF9qdhuyKKjQNTH-PtChD',
+            fileId: req.params.driveID,
             alt: "media",
             supportsAllDrives: true
         },
@@ -163,8 +177,8 @@ router.get("/v1/download", async (req, res, next) => {
                     const readStream = new stream.PassThrough();
                     readStream.end(buffer);
                     res.writeHead(200, {
-                        "Content-disposition": "attachment; filename=" + `file-${Math.random()}`,
-                        "Content-Type": "application/octet-stream",
+                        "Content-disposition": "attachment; filename=" + db_file.name,
+                        "Content-Type": db_file.mime_type,
                         "Content-Length": buffer.length
                     });
                     res.end(buffer);
@@ -189,6 +203,12 @@ router.get("/v1/download", async (req, res, next) => {
     // });
     // res.end(buffer);
 });
+
+//get all files
+router.get('/v1/files/all', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    let files = await File.find({ user: req.user._id }).lean();
+    res.status(200).json({ files: files });
+})
 
 
 module.exports = router;

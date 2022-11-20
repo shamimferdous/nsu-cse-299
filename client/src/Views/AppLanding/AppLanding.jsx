@@ -16,6 +16,8 @@ const AppLanding = (props) => {
 
     const [top, setTop] = useState(100);
     const [uploadModalVisibility, setUploadModalVisibility] = useState(false);
+    const [refresh, setRefresh] = useState(null);
+
 
     useEffect(()=>{
         axios.get('/users/v1/authenticate', {withCredentials: true}).then(response=>{
@@ -66,7 +68,7 @@ const AppLanding = (props) => {
                                     </Button>
                                 </div>
                             </div>
-                            <DriveView/>
+                            <DriveView refresh={refresh} />
                         </div>
                     </Col>
                 </Row>
@@ -76,6 +78,7 @@ const AppLanding = (props) => {
                 <FileUpload
                     uploadModalVisibility={uploadModalVisibility}
                     setUploadModalVisibility={setUploadModalVisibility}
+                    setRefresh={setRefresh}
                 />
             }
         </AppLayout>
