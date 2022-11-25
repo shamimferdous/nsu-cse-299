@@ -3,14 +3,14 @@ import { message } from "antd";
 import { useHistory } from "react-router-dom";
 import axios from '../../config/axios';
 
-const FaceIo = ({op, setFaceIoLoading}) => {
+const FaceIo = ({ op, setFaceIoLoading }) => {
 
     const history = useHistory();
     let faceio;
 
     useEffect(() => {
         console.log('useeffect');
-        faceio = new faceIO("fioa6ce0");
+        faceio = new faceIO("fioa0af6");
 
 
         if (op === 'reg') {
@@ -53,17 +53,22 @@ const FaceIo = ({op, setFaceIoLoading}) => {
               PayLoad: ${response.payload}
               `);
 
-            setTimeout(() => {
-                history.push('/app');
-            }, 3000);
+            // let f_id = 'e802443ccb12423d923b61fb39221d96fioa0af6';
+            axios.post('/users/v1/sign-in', { facial_id: response.facialId }).then(response => {
+                console.log(response.data);
+                localStorage.setItem('device_id', response.data.token);
+                setTimeout(() => {
+                    history.push('/app');
+                    window.location.reload();
+                }, 3000);
+
+            })
+
+
         } catch (error) {
             console.log(error);
         } finally {
-            let f_id = 'e802443ccb12423d923b61fb39221d96fioa0af6';
-            axios.post('/users/v1/sign-in', {facial_id: f_id}).then(response => {
-                console.log(response.data);
-                localStorage.setItem('device_id', response.data.token);
-            })
+
         }
     };
 
