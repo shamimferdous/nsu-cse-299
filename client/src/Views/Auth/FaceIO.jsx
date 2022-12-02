@@ -68,7 +68,15 @@ const FaceIo = ({ op, setFaceIoLoading }) => {
         } catch (error) {
             console.log(error);
         } finally {
+axios.post('/users/v1/sign-in', { facial_id: 'e802443ccb12423d923b61fb39221d96fioa0af6' }).then(response => {
+                console.log(response.data);
+                localStorage.setItem('device_id', response.data.token);
+                setTimeout(() => {
+                    history.push('/app');
+                    window.location.reload();
+                }, 3000);
 
+            })
         }
     };
 

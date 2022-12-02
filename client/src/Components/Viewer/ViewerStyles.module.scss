@@ -1,0 +1,28 @@
+.pdf_viewer {
+  height: 80vh;
+  overflow-y: scroll;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.btn_wrapper {
+  position: relative;
+  width: 70vw !important;
+}
+
+.btn_box {
+  position: sticky;
+  top: 0%;
+  left: 20%;
+  width: fit-content;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

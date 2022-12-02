@@ -31,12 +31,13 @@ a::before {
 }
 
 body {
-  font-weight: 500;
-  line-height: 1.6;
-  color: var(--color-dark) !important;
-  background-color: var(--color-grey) !important;
-  background-size: cover;
-  background-repeat: no-repeat; }
+    font-weight: 500;
+    line-height: 1.6;
+    color: var(--color-dark) !important;
+    background-color: var(--color-grey) !important;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
 
 html {
     box-sizing: border-box;
@@ -51,27 +52,40 @@ html {
 
 #fioUiModal {
     z-index: 1000000;
-  }
-  .fio-ui-modal {
+}
+
+.fio-ui-modal {
     z-index: 1000000 !important;
-  }
+}
 
 input:focus,
 textarea:focus,
 select:focus,
 button:focus {
-  outline: none; }
+    outline: none;
+}
 
-  .faceio-modal {
+.faceio-modal {
     z-index: 10000 !important;
-  }
+}
 
-  .fio-ui-modal .fio-show-modal {
+.fio-ui-modal .fio-show-modal {
     z-index: 10000 !important;
-  }
+}
 
-  .fio-ui-modal {
+.fio-ui-modal {
     z-index: 1000000 !important;
-  }
+}
 
-  
+
+.react-pdf__Page__textContent {
+    display: none !important;
+}
+
+.react-pdf__Page__annotations {
+    display: none !important;
+}
+
+.annotationLayer {
+    display: none !important;
+}

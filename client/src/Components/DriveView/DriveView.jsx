@@ -5,8 +5,11 @@ import { BsDownload } from 'react-icons/bs';
 import moment from "moment";
 import { useEffect, useState } from "react";
 import axios from '../../config/axios.js';
+import PdfViewer from "../Viewer/PDFViewer";
 
 const DriveView = ({refresh}) => {
+
+    const [openPdf, setOpenPdf] = useState(null);
 
     const [files, setFiles] = useState([]);
     useEffect(() => {
@@ -24,13 +27,19 @@ const DriveView = ({refresh}) => {
         return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
     }
 
+    const itemOpenHandler = item =>{
+        if(item.name.split('.')[1] === 'pdf') {
+            setOpenPdf(`http://localhost:5000/api/drive/v1/download/${item.drive_id}`);
+        }
+    }
+
 
     const columns = [
         {
             title: 'Name',
             dataIndex: 'name',
             sorter: (a, b) => a.name.localeCompare(b.name),
-            render: (value) => <div style={{display: 'flex', alignItems: 'center'}}>
+            render: (value, item) => <div style={{display: 'flex', alignItems: 'center', cursor: 'pointer'}} onClick={()=>itemOpenHandler(item)}>
                 <div style={{width: '30px'}}>
                     <FileIcon extension={value.split('.')[1]} {...defaultStyles[value.split('.')[1]]} />
                 </div>
@@ -62,6 +71,11 @@ const DriveView = ({refresh}) => {
     return (
         <div style={{marginTop: '2rem', marginBottom: '5rem'}}>
             <Table columns={columns} dataSource={files}/>
+
+            {
+                openPdf &&
+                <PdfViewer setOpenPdf={setOpenPdf} openPdf={openPdf}/>
+            }
         </div>
     );
 };
