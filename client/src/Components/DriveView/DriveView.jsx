@@ -6,10 +6,12 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import axios from '../../config/axios.js';
 import PdfViewer from "../Viewer/PDFViewer";
+import ImageViewer from "../Viewer/ImageViewer.jsx";
 
 const DriveView = ({refresh}) => {
 
     const [openPdf, setOpenPdf] = useState(null);
+    const [openImg, setOpenImg] = useState(null);
 
     const [files, setFiles] = useState([]);
     useEffect(() => {
@@ -27,9 +29,11 @@ const DriveView = ({refresh}) => {
         return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
     }
 
-    const itemOpenHandler = item =>{
-        if(item.name.split('.')[1] === 'pdf') {
+    const itemOpenHandler = item => {
+        if (item.name.split('.')[1] === 'pdf') {
             setOpenPdf(`http://localhost:5000/api/drive/v1/download/${item.drive_id}`);
+        } else {
+            setOpenImg(`http://localhost:5000/api/drive/v1/download/${item.drive_id}`);
         }
     }
 
@@ -39,7 +43,8 @@ const DriveView = ({refresh}) => {
             title: 'Name',
             dataIndex: 'name',
             sorter: (a, b) => a.name.localeCompare(b.name),
-            render: (value, item) => <div style={{display: 'flex', alignItems: 'center', cursor: 'pointer'}} onClick={()=>itemOpenHandler(item)}>
+            render: (value, item) => <div style={{display: 'flex', alignItems: 'center', cursor: 'pointer'}}
+                                          onClick={() => itemOpenHandler(item)}>
                 <div style={{width: '30px'}}>
                     <FileIcon extension={value.split('.')[1]} {...defaultStyles[value.split('.')[1]]} />
                 </div>
@@ -75,6 +80,11 @@ const DriveView = ({refresh}) => {
             {
                 openPdf &&
                 <PdfViewer setOpenPdf={setOpenPdf} openPdf={openPdf}/>
+            }
+
+            {
+                openImg &&
+                <ImageViewer setOpenImg={setOpenImg} openImg={openImg}/>
             }
         </div>
     );

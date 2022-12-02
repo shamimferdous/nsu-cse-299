@@ -13,6 +13,7 @@ const PdfViewer = ({openPdf, setOpenPdf}) => {
     const [pageNumber, setPageNumber] = useState(1);
     const [loading, setLoading] = useState(true);
     const [pdf, setPdf] = useState(null);
+    
 
     function removeTextLayerOffset() {
         const textLayers = document.querySelectorAll(".react-pdf__Page__textContent");
