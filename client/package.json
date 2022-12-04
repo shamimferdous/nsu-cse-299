@@ -10,14 +10,16 @@
         "compile-less": "lessc --js src/styles/custom-theme.less node_modules/antd/dist/custom-antd.css"
     },
     "dependencies": {
+        "@cyntler/react-doc-viewer": "^1.10.3",
         "antd": "^4.24.0",
         "axios": "^1.1.3",
         "gapi-script": "^1.2.0",
         "moment": "^2.29.4",
         "react": "^18.2.0",
-        "react-doc-viewer": "^0.1.5",
         "react-dom": "^18.2.0",
+        "react-excel-renderer": "^1.1.0",
         "react-file-icon": "^1.2.0",
+        "react-file-viewer": "^1.2.1",
         "react-google-login": "^5.2.2",
         "react-icons": "^4.6.0",
         "react-pdf": "^6.2.0",

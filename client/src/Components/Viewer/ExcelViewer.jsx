@@ -1,15 +1,15 @@
 import styles from './ViewerStyles.module.scss';
 //importing components
-
+import { Document, Page } from 'react-pdf/dist/esm/entry.vite';
 import { Button, Modal } from "antd";
 import { useEffect, useState } from "react";
 import axios from '../../config/axios.js';
 import { BsChevronRight, BsChevronLeft } from 'react-icons/bs';
 import Loader from "../Library/Loader/Loader.jsx";
-import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
+import FileViewer from 'react-file-viewer';
+import { OutTable, ExcelRenderer } from 'react-excel-renderer';
 
-
-const PdfViewer = ({openPdf, setOpenPdf, openEx}) => {
+const ExcelViewer = ({openExcel, setOpenExcel, openEx}) => {
 
     const [numPages, setNumPages] = useState(null);
     const [pageNumber, setPageNumber] = useState(1);
@@ -17,8 +17,11 @@ const PdfViewer = ({openPdf, setOpenPdf, openEx}) => {
     const [pdf, setPdf] = useState(null);
     const [docs, setDocs] = useState([]);
 
+    const [rows, setRows] = useState([]);
+    const [cols, setCols] = useState([]);
+
     useEffect(() => {
-        console.log(openPdf)
+        console.log(openEx)
     }, []);
 
     function removeTextLayerOffset() {
@@ -38,7 +41,7 @@ const PdfViewer = ({openPdf, setOpenPdf, openEx}) => {
     }
 
     useEffect(() => {
-        let url = openPdf;
+        let url = openExcel;
         axios.get(
             url,
             {responseType: 'blob'} // !!!
@@ -46,36 +49,40 @@ const PdfViewer = ({openPdf, setOpenPdf, openEx}) => {
             // window.open(URL.createObjectURL(response.data));
             setLoading(false);
             setPdf(response.data)
-            setDocs([
-                {
-                    uri: URL.createObjectURL(response.data),
+
+            ExcelRenderer(response.data, (err, resp) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    // console.log(resp);
+                    setRows(resp.rows);
+                    setCols(resp.cols);
                 }
-            ])
+            });
+
         })
     }, []);
 
     return (
         <Modal
-            visible={openPdf ? true : false}
+            visible={openExcel ? true : false}
             centered={true}
             footer={null}
             width={'80%'}
-            onCancel={() => setOpenPdf(null)}
+            onCancel={() => setOpenExcel(null)}
         >
             {
                 loading &&
                 <Loader height={'80vh'}/>
             }
 
-
             {
-                docs.length > 0 &&
-                <DocViewer documents={docs} pluginRenderers={DocViewerRenderers}/>
+                rows.length > 0 &&
+                <OutTable data={rows} columns={cols} tableClassName={styles.table_excel} tableHeaderRowClass="heading"/>
             }
-
 
         </Modal>
     );
 };
 
-export default PdfViewer;
+export default ExcelViewer;

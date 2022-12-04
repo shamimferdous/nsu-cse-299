@@ -7,11 +7,17 @@ import { useEffect, useState } from "react";
 import axios from '../../config/axios.js';
 import PdfViewer from "../Viewer/PDFViewer";
 import ImageViewer from "../Viewer/ImageViewer.jsx";
+import DocViewer from "../Viewer/DocViewer.jsx";
+import { IoSettingsOutline } from "react-icons/all.js";
+import ExcelViewer from "../Viewer/ExcelViewer.jsx";
 
 const DriveView = ({refresh}) => {
 
     const [openPdf, setOpenPdf] = useState(null);
+    const [openDoc, setOpenDoc] = useState(null);
     const [openImg, setOpenImg] = useState(null);
+    const [openEx, setOpenEx] = useState(null);
+    const [openExcel, setOpenExcel] = useState(null);
 
     const [files, setFiles] = useState([]);
     useEffect(() => {
@@ -30,10 +36,18 @@ const DriveView = ({refresh}) => {
     }
 
     const itemOpenHandler = item => {
+        setOpenEx(item.name.split('.')[1]);
         if (item.name.split('.')[1] === 'pdf') {
             setOpenPdf(`http://localhost:5000/api/drive/v1/download/${item.drive_id}`);
+        } else if (item.name.split('.')[1] === 'docx') {
+            setOpenDoc(`http://localhost:5000/api/drive/v1/download/${item.drive_id}`);
+        } else if (item.name.split('.')[1] === 'mp3') {
+            setOpenDoc(`http://localhost:5000/api/drive/v1/download/${item.drive_id}`);
+        } else if (item.name.split('.')[1] === 'xlsx') {
+            setOpenExcel(`http://localhost:5000/api/drive/v1/download/${item.drive_id}`);
         } else {
-            setOpenImg(`http://localhost:5000/api/drive/v1/download/${item.drive_id}`);
+            // setOpenImg(`http://localhost:5000/api/drive/v1/download/${item.drive_id}`);
+            setOpenPdf(`http://localhost:5000/api/drive/v1/download/${item.drive_id}`);
         }
     }
 
@@ -79,7 +93,17 @@ const DriveView = ({refresh}) => {
 
             {
                 openPdf &&
-                <PdfViewer setOpenPdf={setOpenPdf} openPdf={openPdf}/>
+                <PdfViewer setOpenPdf={setOpenPdf} openPdf={openPdf} openEx={openEx}/>
+            }
+
+            {
+                openDoc &&
+                <DocViewer setOpenDoc={setOpenDoc} openDoc={openDoc} openEx={openEx}/>
+            }
+
+            {
+                openExcel &&
+                <ExcelViewer setOpenExcel={setOpenExcel} openExcel={openExcel} openEx={openEx}/>
             }
 
             {

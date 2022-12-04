@@ -27,3 +27,20 @@
     justify-content: center;
   }
 }
+
+.table_excel {
+  width: 100%;
+  margin-bottom: 1em;
+  border-collapse: collapse;
+
+  th {
+    font-weight: bold;
+    background-color: #ddd;
+  }
+
+  th,
+  td {
+    padding: 0.5em;
+    border: 1px solid #ccc;
+  }
+}

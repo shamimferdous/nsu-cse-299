@@ -1,15 +1,14 @@
 import styles from './ViewerStyles.module.scss';
 //importing components
-
+import { Document, Page } from 'react-pdf/dist/esm/entry.vite';
 import { Button, Modal } from "antd";
 import { useEffect, useState } from "react";
 import axios from '../../config/axios.js';
 import { BsChevronRight, BsChevronLeft } from 'react-icons/bs';
 import Loader from "../Library/Loader/Loader.jsx";
-import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
+import FileViewer from 'react-file-viewer';
 
-
-const PdfViewer = ({openPdf, setOpenPdf, openEx}) => {
+const DocViewer = ({ openDoc, setOpenDoc, openEx}) => {
 
     const [numPages, setNumPages] = useState(null);
     const [pageNumber, setPageNumber] = useState(1);
@@ -17,8 +16,8 @@ const PdfViewer = ({openPdf, setOpenPdf, openEx}) => {
     const [pdf, setPdf] = useState(null);
     const [docs, setDocs] = useState([]);
 
-    useEffect(() => {
-        console.log(openPdf)
+    useEffect(()=>{
+        console.log(openEx)
     }, []);
 
     function removeTextLayerOffset() {
@@ -38,7 +37,7 @@ const PdfViewer = ({openPdf, setOpenPdf, openEx}) => {
     }
 
     useEffect(() => {
-        let url = openPdf;
+        let url = openDoc;
         axios.get(
             url,
             {responseType: 'blob'} // !!!
@@ -48,7 +47,8 @@ const PdfViewer = ({openPdf, setOpenPdf, openEx}) => {
             setPdf(response.data)
             setDocs([
                 {
-                    uri: URL.createObjectURL(response.data),
+                    uri: 'https://scholar.harvard.edu/files/torman_personal/files/samplepptx.pptx',
+                    fileType: 'docx'
                 }
             ])
         })
@@ -56,21 +56,23 @@ const PdfViewer = ({openPdf, setOpenPdf, openEx}) => {
 
     return (
         <Modal
-            visible={openPdf ? true : false}
+            visible={openDoc ? true : false}
             centered={true}
             footer={null}
             width={'80%'}
-            onCancel={() => setOpenPdf(null)}
+            onCancel={() => setOpenDoc(null)}
         >
             {
                 loading &&
                 <Loader height={'80vh'}/>
             }
 
-
             {
-                docs.length > 0 &&
-                <DocViewer documents={docs} pluginRenderers={DocViewerRenderers}/>
+                pdf &&
+                <FileViewer
+                    fileType={openEx}
+                    filePath={window.URL.createObjectURL(pdf)}
+                />
             }
 
 
@@ -78,4 +80,4 @@ const PdfViewer = ({openPdf, setOpenPdf, openEx}) => {
     );
 };
 
-export default PdfViewer;
+export default DocViewer;
