@@ -54,9 +54,13 @@ const ExcelViewer = ({openExcel, setOpenExcel, openEx}) => {
                 if (err) {
                     console.log(err);
                 } else {
-                    // console.log(resp);
-                    setRows(resp.rows);
-                    setCols(resp.cols);
+                    console.log(resp);
+                    let r = resp.cols
+                    r.push({
+                        name: 'G',key: 6
+                    })
+                    setRows(resp.rowsd);
+                    setCols(r);
                 }
             });
 
